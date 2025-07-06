@@ -1,0 +1,35 @@
+Membro: Rian
+
+    Tarefa: Estruturação Inicial do Projeto e Lógica Principal.
+
+        Rian começou a configurar a estrutura inicial do projeto na segunda-feira, 30 de junho de 2025, às 19:00, criando os arquivos main.cpp, o esqueleto de avl.h e o banco de dados DB.txt. Na terça-feira, 01 de julho, a partir das 20:00, ele integrou a biblioteca AVL de Lucas e desenvolveu o fluxo principal do programa, com o menu de opções e as funções de busca, finalizando por volta da 01:00 do dia 02 de julho. A execução de ambas as partes levou aproximadamente 4 horas no período.
+
+    Tarefa: Refatoração do main.cpp para o Relatório de Compressão.
+
+        Rian começou a refatorar o código na quinta-feira, 03 de julho, às 21:00, para adicionar a nova opção de menu "Comprimir Banco de Dados". Ele removeu a lógica de integração profunda anterior e preparou o case 3 para a nova funcionalidade, terminando às 23:30 do mesmo dia, levando cerca de 2.5 horas para cumprir a tarefa neste período.
+
+    Tarefa: Correção de Bug de Compilação (getFileSize não reconhecida).
+
+        Rian iniciou a depuração de um erro de compilação na função main na sexta-feira, 04 de julho, às 19:00, onde a chamada para a função getFileSize não era reconhecida pelo compilador. Ele finalizou a correção às 20:00 do mesmo dia, o que levou aproximadamente 1 hora de esforço.
+
+    Tarefa: Implementação da Correção Lógica do Fator de Redução.
+
+        Rian começou a implementar a correção do cálculo de compressão no sábado, 05 de julho, às 14:00. Com base na análise de Lucas, ele reescreveu a lógica do case 3 para calcular a compressão em bits em vez de medir o tamanho do arquivo, concluindo a tarefa às 16:00 do mesmo dia, levando aproximadamente 2 horas.
+
+Membro: Lucas
+
+    Tarefa: Desenvolvimento da Biblioteca de Árvore AVL.
+
+        Lucas começou a desenvolver a lógica completa da biblioteca avl.h na segunda-feira, 30 de junho de 2025, às 20:00. O trabalho incluiu a implementação das rotações, balanceamento, inserção e busca. Ele finalizou a tarefa na terça-feira, 01 de julho, às 23:00, levando um tempo estimado de 4.5 horas de esforço distribuídas neste período.
+
+    Tarefa: Desenvolvimento da Biblioteca Huffman.
+
+        Lucas começou a criar a biblioteca huffman.h na quarta-feira, 02 de julho, às 19:00, implementando a construção da árvore, a geração de códigos e as funções de compressão/descompressão. Ele concluiu o desenvolvimento por volta da 21:30, o que levou aproximadamente 2.5 horas de trabalho neste período.
+
+    Tarefa: Tradução e Padronização da Biblioteca Huffman.
+
+        Lucas começou a refatorar o arquivo huffman.h na sexta-feira, 04 de julho, às 14:00, traduzindo todos os comentários, variáveis e nomes de métodos para o português, para adequar ao padrão do restante do projeto. Ele terminou o trabalho às 15:30 do mesmo dia, levando cerca de 1.5 horas para esta tarefa.
+
+    Tarefa: Análise do Bug de Compressão (Fator de Redução Negativo).
+
+        Lucas começou a investigar a causa do fator de redução negativo no sábado, 05 de julho, às 11:00. Ele analisou a lógica e identificou que o problema estava na representação dos bits comprimidos (salvos como bytes), finalizando sua análise e propondo a solução do cálculo teórico às 13:00 do mesmo dia, uma tarefa que demandou aproximadamente 2 horas de esforço.
