@@ -8,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include "avl.h"
+#include "huffman.h"
 
 using namespace std;
 
@@ -87,6 +88,14 @@ void salva_arquivo(const vector<AVL::Info> &vetor, const string &nome_arquivo){
     arquivo.close();
 }
 
+long calculaTamArquivo(const string& filename) {
+    ifstream file(filename, ios::binary | ios::ate);
+    if (!file.is_open()) {
+        return -1;
+    }
+    return file.tellg();
+}
+
 int main(){
     bool continuar = true;
     int opcao;
@@ -99,9 +108,10 @@ int main(){
         limpa_tela();
 
         cout << "MENU: " << endl
-             << "1 - Busca um produto na AVL" <<endl
-             << "2 - Busca linear de um produto" << endl
-             << "3 - Sair" << endl;
+            << "1 - Busca um produto na AVL" <<endl
+            << "2 - Busca linear de um produto" << endl
+            << "3 - Comprimir banco de dados com Huffman" << endl
+            << "4 - Sair" << endl;
 
         entrada(1,4,&opcao);
         limpa_tela();
@@ -119,9 +129,9 @@ int main(){
                 
                 if (nodo){
                     cout << "\u2714 " << "Produto: " << endl
-                         << "\t Código: " << nodo->dado.id << endl
-                         << "\t Nome: " << nodo->dado.nome << endl
-                         << "\t Preço: " << fixed << setprecision(2) << nodo->dado.preco << endl; 
+                        << "\t Código: " << nodo->dado.id << endl
+                        << "\t Nome: " << nodo->dado.nome << endl
+                        << "\t Preço: " << fixed << setprecision(2) << nodo->dado.preco << endl; 
                 }else cout << "\u2718 Código de produto não encontrado."; ;
 
                 cout << "\n Tempo decorrido: " << fixed << setprecision(2) << tempo_total.count() << " segundos" << endl;
@@ -149,16 +159,58 @@ int main(){
 
                 if (indice != -1) {
                     cout << "\u2714 " << "Produto: " << endl
-                         << "\t Código: " << vetor[indice].id << endl
-                         << "\t Nome: " << vetor[indice].nome << endl
-                         << "\t Preço: " << fixed << setprecision(2) << vetor[indice].preco << endl;
+                        << "\t Código: " << vetor[indice].id << endl
+                        << "\t Nome: " << vetor[indice].nome << endl
+                        << "\t Preço: " << fixed << setprecision(2) << vetor[indice].preco << endl;
                 }else cout << "\u2718 Código de produto não encontrado."; 
 
                 cout << "\n Tempo decorrido: " << fixed << setprecision(2) << tempo_total.count() << " segundos" << endl;
 
                 break;
             }
-            case 3:
+            case 3: {
+                cout << "=== Relatório de Compressão do Banco de Dados ===" << endl << endl;
+                
+                if (vetor.empty()) {
+                    cout << "O banco de dados está vazio. Nada para analisar." << endl;
+                    break;
+                }
+
+                string texto_completo;
+                for (const auto& info : vetor) {
+                    texto_completo += info.nome;
+                }
+                
+                Huffman huffman_compressor;
+                huffman_compressor.construir(texto_completo);
+                cout << "Árvore de Huffman construída com base nos nomes dos produtos." << endl;
+
+                long long total_bits_originais = 0;
+                long long total_bits_comprimidos = 0;
+
+                for (const auto& info : vetor) {
+                    total_bits_originais += info.nome.length() * 8;
+
+                    string nome_comprimido = huffman_compressor.comprimir(info.nome);
+                    total_bits_comprimidos += nome_comprimido.length();
+                }
+
+                long tamanho_original_bytes = total_bits_originais / 8;
+                long tamanho_comprimido_bytes = (total_bits_comprimidos + 7) / 8; // (+7 para arredondar para cima)
+
+                if (tamanho_original_bytes > 0) {
+                    double reducao = 100.0 * (1.0 - (double)tamanho_comprimido_bytes / tamanho_original_bytes);
+                    cout << "--- Relatório de Compressão (Apenas para os Nomes dos Produtos) ---" << endl;
+                    cout << "Tamanho Original dos Nomes: \t" << tamanho_original_bytes << " bytes" << endl;
+                    cout << "Tamanho Comprimido: \t" << tamanho_comprimido_bytes << " bytes" << endl;
+                    cout << "Fator de Redução: \t\t" << fixed << setprecision(2) << reducao << "%" << endl;
+                } else {
+                    cout << "Não foi possível gerar o relatório (sem dados)." << endl;
+                }
+
+                break;
+            }
+            case 4:
                 continuar = false;
                 break;
         }
